@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>¡Gran Fiesta de San Valentín!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-red: #c1121f;
+            --bright-red: #ff0a54;
+            --pink-pop: #ff477e;
+            --text-light: #fff0f3;
+        }
+
+        /* Reset y Prevención de desbordamiento horizontal */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            overflow-x: hidden; 
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bright-red) 0%, var(--pink-pop) 50%, #ff85a1 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+
+        /* --- Decoraciones de Fondo --- */
+        #bg-decorations {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 0 5px var(--bright-red);
+            z-index: 1;
+        }
+
+        .main-title{
+            text-align: center;
+        }
+
+        .ribbon-svg {
+            position: absolute;
+            opacity: 0.4;
+            fill: none;
+            stroke: white;
+            stroke-width: 4;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 8px var(--deep-red));
+        }
+
+        /* --- Estructura Secciones --- */
+        section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        /* --- Tarjetas Estilo "Regalo" (Mobile Ready) --- */
+        .gift-card {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 3px solid var(--bright-red);
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 380px; /* Tamaño ideal para móvil */
+            box-shadow: 0 15px 35px rgba(193, 18, 31, 0.4), inset 0 0 20px rgba(255, 10, 84, 0.2);
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-ribbon-top {
+            height: 12px;
+            background: var(--deep-red);
+            width: 120%;
+            position: absolute;
+            top: 0; left: -10%;
+        }
+
+        /* --- Tipografía Adaptable --- */
+        h1 {
+            font-family: 'Lobster', cursive;
+            font-size: clamp(2.5rem, 12vw, 4.5rem); /* Se ajusta al tamaño de pantalla */
+            text-shadow: 3px 3px 0px var(--deep-red);
+            margin-bottom: 10px;
+            line-height: 1.1;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        small{
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        h2 {
+            font-family: 'Lobster', cursive;
+            font-size: clamp(2rem, 8vw, 2.8rem);
+            text-shadow: 2px 2px 5px var(--deep-red);
+            margin-bottom: 20px;
+        }
+
+        h3 { font-weight: 800; font-size: 1.3rem; margin-bottom: 8px; color: white; text-transform: uppercase;}
+        p { font-size: 1.05rem; font-weight: 500; line-height: 1.4; }
+
+        .hero-icon {
+            font-size: clamp(4rem, 15vw, 6rem);
+            filter: drop-shadow(0 0 20px var(--deep-red));
+        }
+
+        .activity-icon { font-size: 3rem; display: block; margin-bottom: 10px; }
+        
+        /* --- Botón "Action" Mobile --- */
+        .btn-flashy {
+            display: block;
+            width: 90%;
+            margin: 25px auto 0;
+            padding: 18px 20px;
+            background: linear-gradient(45deg, var(--deep-red), var(--bright-red));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(193, 18, 31, 0.6);
+            border: 2px solid white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="bg-decorations">
+        <svg class="ribbon-svg ribbon-1" width="150" height="300" viewBox="0 0 100 200" style="top: 5%; left: -30px;">
+            <path d="M10,10 C40,50 10,90 40,130 C70,170 40,210 10,250" />
+        </svg>
+        <svg class="ribbon-svg ribbon-2" width="200" height="400" viewBox="0 0 150 300" style="top: 50%; right: -50px;">
+            <path d="M100,10 C50,60 120,110 70,160 C20,210 90,260 40,310" stroke-width="5" />
+        </svg>
+    </div>
+
+    <section class="hero">
+        <div class="hero-icon">🎀</div>
+        <h1 id="main-title">¡Convivio de San Valentín!</h1>
+        <p style="font-weight: 800; margin-bottom: 25px;">Maestra Rubi 5° "B"</p>
+        
+        <div class="gift-card" id="hero-card">
+            <div class="card-ribbon-top"></div>
+            <p style="margin-bottom: 10px;">Prepárate para la mañana más divertida y romántica del año escolar.</p>
+
+            <small>Recuerda que las primeras horas son clases normales, ¡no faltes!</small>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>¡No te lo pierdas!</h2>
+        
+        <div class="gift-card activity-card">
+            <div class="card-ribbon-top"></div>
+            <span class="activity-icon">🎁</span>
+            <h3>Gran Intercambio</h3>
+            <p>¡Trae tu llavero! Dinámica sorpresa para intercambiar con nuevos compañeros.</p>
+        </div>
+
+        <div class="gift-card activity-card">
+            <div class="card-ribbon-top"></div>
+            <span class="activity-icon">🥐🍓</span>
+            <h3>Desayuno Buffet</h3>
+            <p>Agua de piña, gelatina, frutas, banderillas y muchas delicias para compartir en nuestro banquete.</p>
+        </div>
+    </section>
+
+    <section id="info">
+        <div class="gift-card final-card">
+            <div class="card-ribbon-top"></div>
+            <h2>¿Dónde y Cuándo?</h2>
+            <p style="font-size: 1.4rem; font-weight: 800; margin: 15px 0;">📅 13 de Febrero</p>
+            <p>⏰ 10:20 AM | Salón 5° "B"</p>
+            
+            <a href="https://maps.app.goo.gl/J7RUPaqKNEqYzmnWA" target="_blank" class="btn-flashy">
+                📍 Da click para llegar!
+            </a>
+        </div>
+    </section>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- 1. GENERADOR DE CORAZONES ---
+        const container = document.getElementById('bg-decorations');
+        const heartIcons = ['💖', '💞', '🌹', '💌', '✨'];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            container.appendChild(heart);
+
+            gsap.fromTo(heart, 
+                { y: "105vh", opacity: 0 },
+                { 
+                    y: "-15vh", 
+                    opacity: 0.7, 
+                    rotation: "random(-180, 180)",
+                    duration: Math.random() * 3 + 4, 
+                    ease: "none",
+                    onComplete: () => heart.remove() 
+                }
+            );
+        }
+        setInterval(createHeart, 400); // Frecuencia balanceada para móvil
+
+        // --- 2. ANIMACIONES GSAP ---
+        
+        // Entrada Hero
+        gsap.from("#main-title", { scale: 0.2, opacity: 0, duration: 1, ease: "back.out(1.7)" });
+        gsap.from(".hero-icon", { y: -30, repeat: -1, yoyo: true, duration: 1.5, ease: "sine.inOut" });
+
+        // Tarjetas con rotación controlada para que no se salgan de la pantalla
+        gsap.utils.toArray(".gift-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 95%",
+                },
+                scale: 0.8,
+                rotation: i % 2 === 0 ? -5 : 5, // Rotación suave para móvil
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+
+        // Animación Listones
+        gsap.to(".ribbon-1", { x: 15, rotation: 5, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        gsap.to(".ribbon-2", { x: -15, rotation: -5, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+        // Botón Pulsante
+        gsap.to(".btn-flashy", { scale: 1.05, repeat: -1, yoyo: true, duration: 0.6 });
+    </script>
+</body>
+</html>
